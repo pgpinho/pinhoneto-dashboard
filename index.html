@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-PT" data-theme="dark">
 <head>
     <meta charset="UTF-8" />
 
@@ -9,38 +9,32 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="PINHO-NETO" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#0a0b0f" />
-    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="dark light" />
 
     <!-- SEO -->
     <title>PINHO-NETO · Serviços</title>
     <meta name="description" content="Painel central de serviços auto-hospedados do servidor doméstico PINHO-NETO." />
-    <meta name="author" content="PINHO-NETO" />
 
-    <!-- Fonts — Space Grotesk, Inter, JetBrains Mono -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 
     <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css?v=4.1" />
+    <link rel="stylesheet" href="css/style.css?v=5.0" />
 
     <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%230a0b0f' stroke='%233a3d46' stroke-width='1'/><text x='16' y='22' font-family='monospace' font-size='14' font-weight='700' fill='%235ef0e0' text-anchor='middle'>PN</text></svg>" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%23000' stroke='%233a3d46' stroke-width='1'/><text x='16' y='22' font-family='monospace' font-size='14' font-weight='700' fill='%230a84ff' text-anchor='middle'>PN</text></svg>" />
 </head>
 <body>
-    <!-- Ambient background -->
     <div class="bg-ambient" aria-hidden="true"></div>
 
-    <!-- ============================================================
-         Header
-         ============================================================ -->
+    <!-- ============================================================ Header -->
     <header class="site-header" id="siteHeader">
         <div class="logo" aria-label="PINHO-NETO">
             <span class="logo-mark" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--signal);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="18" height="18" rx="4"></rect>
-                    <text x="12" y="16" font-family="monospace" font-size="8" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">PN</text>
                 </svg>
             </span>
             <span class="logo-text">
@@ -53,12 +47,17 @@
                 <span class="clock-time" id="clock-time">--:--:--</span>
                 <span class="clock-date" id="clock-date">—</span>
             </div>
+            <button class="config-btn" id="configBtn" aria-label="Configurações">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </button>
+            <div class="header-avatar" id="headerAvatar" title="Perfil">?</div>
         </div>
     </header>
 
-    <!-- ============================================================
-         Toolbar: search + category filter chips
-         ============================================================ -->
+    <!-- ============================================================ Toolbar -->
     <div class="toolbar">
         <div class="search-wrap">
             <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -77,9 +76,7 @@
         </div>
     </div>
 
-    <!-- ============================================================
-         Services grid — fills remaining viewport
-         ============================================================ -->
+    <!-- ============================================================ Services -->
     <div class="services-wrap">
         <section id="services" class="services" aria-label="Serviços"></section>
         <p class="no-results" id="no-results" hidden>Nenhum serviço encontrado.</p>
@@ -87,12 +84,176 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <span>© 2026 PINHO-NETO · Hermes Agent · v4.0</span>
+        <span>© 2026 PINHO-NETO · Hermes Agent · v5.0</span>
     </footer>
 
-    <!-- ============================================================
-         About panel (modal overlay)
-         ============================================================ -->
+    <!-- ============================================================ Login overlay -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card">
+            <div class="login-logo">
+                <span class="logo-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                    </svg>
+                </span>
+                <div>
+                    <div class="login-title">PINHO-NETO</div>
+                    <div class="login-sub">Serviços do servidor doméstico</div>
+                </div>
+            </div>
+
+            <form id="loginForm">
+                <div class="login-field">
+                    <label class="login-label" for="loginUser">Utilizador</label>
+                    <input class="login-input" type="text" id="loginUser" placeholder="admin" autocomplete="username" required />
+                </div>
+                <div class="login-field">
+                    <label class="login-label" for="loginPass">Palavra-passe</label>
+                    <input class="login-input" type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" required />
+                </div>
+                <span class="login-error" id="loginError" hidden></span>
+                <button type="submit" class="login-btn" id="loginBtn">Entrar</button>
+            </form>
+
+            <p class="login-hint">Credenciais iniciais: admin / pinho-neto</p>
+        </div>
+    </div>
+
+    <!-- ============================================================ Config drawer -->
+    <div class="config-overlay" id="configOverlay"></div>
+    <aside class="config-drawer" id="configDrawer">
+        <div class="config-header">
+            <span class="config-title">Configurações</span>
+            <button class="config-close" id="configClose" aria-label="Fechar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="config-body">
+            <!-- User card -->
+            <div class="config-user-card">
+                <div class="config-avatar" id="configAvatar">?</div>
+                <div class="config-user-info">
+                    <div class="config-user-name" id="userName">—</div>
+                    <div class="config-user-role" id="userRole">—</div>
+                </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="config-section">
+                <div class="config-section-title">Aparência</div>
+                <div class="config-row">
+                    <div>
+                        <div class="config-row-label">Modo claro</div>
+                        <div class="config-row-desc">Alternar entre escuro e claro</div>
+                    </div>
+                    <label class="toggle">
+                        <input type="checkbox" id="themeToggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Profile -->
+            <div class="config-section">
+                <div class="config-section-title">Perfil</div>
+                <input type="text" class="config-input" id="profileName" placeholder="Nome a mostrar" />
+                <div class="config-btn-row">
+                    <button class="config-btn primary" id="profileSave">Guardar nome</button>
+                </div>
+            </div>
+
+            <!-- Change password -->
+            <div class="config-section">
+                <div class="config-section-title">Segurança</div>
+                <input type="password" class="config-input" id="curPassword" placeholder="Palavra-passe atual" />
+                <input type="password" class="config-input" id="newMyPassword" placeholder="Nova palavra-passe" />
+                <div class="config-btn-row">
+                    <button class="config-btn" id="passChangeBtn">Alterar palavra-passe</button>
+                </div>
+            </div>
+
+            <!-- Admin section -->
+            <div class="config-section" id="adminSection" style="display:none">
+                <div class="config-section-title">Gestão de Utilizadores</div>
+                <div id="userList"></div>
+                <div class="config-btn-row">
+                    <button class="config-btn primary" id="createUserBtn">+ Novo utilizador</button>
+                </div>
+            </div>
+
+            <!-- Logout -->
+            <div class="config-section">
+                <button class="config-btn danger" id="logoutBtn" style="width:100%">Terminar sessão</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ============================================================ New user form modal -->
+    <div class="modal-overlay" id="newUserForm">
+        <div class="modal-card">
+            <div class="modal-title">Novo Utilizador</div>
+            <div class="modal-field">
+                <label class="modal-label">Nome a mostrar</label>
+                <input type="text" class="config-input" id="newDisplayName" placeholder="Ex: Rodrigo" />
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Utilizador (login)</label>
+                <input type="text" class="config-input" id="newUsername" placeholder="Ex: rodrigo" />
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Palavra-passe</label>
+                <input type="password" class="config-input" id="newPassword" placeholder="••••••••" />
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Função</label>
+                <select class="config-input" id="newRole">
+                    <option value="user">Utilizador</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+            <div class="modal-field" id="newUserServicesField">
+                <label class="modal-label">Serviços permitidos</label>
+                <div id="newUserServices"></div>
+            </div>
+            <div class="config-btn-row">
+                <button class="config-btn" id="newUserCancel">Cancelar</button>
+                <button class="config-btn primary" id="newUserSave">Criar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ User editor modal -->
+    <div class="modal-overlay" id="userEditor">
+        <div class="modal-card">
+            <div class="modal-title">Editar Utilizador</div>
+            <div class="modal-field">
+                <label class="modal-label">Utilizador</label>
+                <span class="modal-label" id="editUsername" style="color:var(--text-dim)"></span>
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Nome a mostrar</label>
+                <input type="text" class="config-input" id="editDisplayName" />
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Nova palavra-passe (opcional)</label>
+                <input type="password" class="config-input" id="editNewPass" placeholder="Deixar vazio para manter" />
+            </div>
+            <div class="modal-field">
+                <label class="modal-label">Serviços permitidos</label>
+                <div id="editServices"></div>
+            </div>
+            <div class="config-btn-row">
+                <button class="config-btn" id="editCancel">Cancelar</button>
+                <button class="config-btn primary" id="editSave">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================ About modal -->
     <div class="about-section" id="aboutSection">
         <div class="about-panel">
             <div class="about-header">
@@ -104,93 +265,51 @@
                     </svg>
                 </button>
             </div>
-            <div class="about-card">
-                <div class="about-row">
-                    <div class="about-row-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    </div>
-                    <div class="about-row-content">
-                        <div class="about-row-label">SERVIDOR</div>
-                        <div class="about-row-value">PINHO-NETO</div>
-                    </div>
+            <div class="about-row">
+                <div class="about-row-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
                 </div>
-                <div class="about-row">
-                    <div class="about-row-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                    </div>
-                    <div class="about-row-content">
-                        <div class="about-row-label">DOMÍNIO</div>
-                        <div class="about-row-value">pinhoneto.duckdns.org</div>
-                    </div>
+                <div class="about-row-content"><div class="about-row-label">SERVIDOR</div><div class="about-row-value">PINHO-NETO</div></div>
+            </div>
+            <div class="about-row">
+                <div class="about-row-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 </div>
-                <div class="about-row">
-                    <div class="about-row-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 2 2 7l10 5 10-5-10-5z"></path>
-                            <path d="m2 17 10 5 10-5"></path>
-                            <path d="m2 12 10 5 10-5"></path>
-                        </svg>
-                    </div>
-                    <div class="about-row-content">
-                        <div class="about-row-label">PLATAFORMA</div>
-                        <div class="about-row-value">Hermes Agent</div>
-                    </div>
+                <div class="about-row-content"><div class="about-row-label">DOMÍNIO</div><div class="about-row-value">pinhoneto.duckdns.org</div></div>
+            </div>
+            <div class="about-row">
+                <div class="about-row-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"></path><path d="m2 17 10 5 10-5"></path><path d="m2 12 10 5 10-5"></path></svg>
                 </div>
-                <div class="about-row about-row-last">
-                    <div class="about-row-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                        </svg>
-                    </div>
-                    <div class="about-row-content">
-                        <div class="about-row-label">VERSÃO</div>
-                        <div class="about-row-value">4.0 · Web App</div>
-                    </div>
+                <div class="about-row-content"><div class="about-row-label">PLATAFORMA</div><div class="about-row-value">Hermes Agent</div></div>
+            </div>
+            <div class="about-row">
+                <div class="about-row-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 </div>
+                <div class="about-row-content"><div class="about-row-label">VERSÃO</div><div class="about-row-value">5.0 · Auth Edition</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-         MOBILE — bottom tab bar
-         ============================================================ -->
+    <!-- ============================================================ Mobile tab bar -->
     <nav class="tab-bar" id="tabBar" aria-label="Navegação">
         <button class="tab-item active" data-tab="inicio" aria-label="Início">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 9.5 12 3l9 6.5"></path>
-                <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"></path>
-            </svg>
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"></path><path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"></path></svg>
             <span class="tab-label">Início</span>
         </button>
-        <button class="tab-item" data-tab="servicos" aria-label="Serviços">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="7" height="7" rx="2"></rect>
-                <rect x="14" y="3" width="7" height="7" rx="2"></rect>
-                <rect x="3" y="14" width="7" height="7" rx="2"></rect>
-                <rect x="14" y="14" width="7" height="7" rx="2"></rect>
-            </svg>
-            <span class="tab-label">Serviços</span>
+        <button class="tab-item" data-tab="config" aria-label="Configuração">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="tab-label">Config</span>
         </button>
         <button class="tab-item" data-tab="acerca" aria-label="Acerca">
-            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="9"></circle>
-                <line x1="12" y1="10" x2="12" y2="16"></line>
-                <circle cx="12" cy="7" r="0.8" fill="currentColor"></circle>
-            </svg>
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="10" x2="12" y2="16"></line><circle cx="12" cy="7" r="0.8" fill="currentColor"></circle></svg>
             <span class="tab-label">Acerca</span>
         </button>
     </nav>
 
-    <!-- App script -->
-    <script src="js/app.js?v=4.1"></script>
+    <!-- Scripts -->
+    <script src="js/auth.js?v=5.0"></script>
+    <script src="js/app.js?v=5.0"></script>
 </body>
 </html>
