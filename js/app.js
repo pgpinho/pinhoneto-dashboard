@@ -88,7 +88,7 @@
                 {
                     name: 'Open WebUI',
                     desc: 'Interface web para modelos de IA locais.',
-                    url: 'https://pgpinho.duckdns.org/openwebui/',
+                    url: 'https://papaai.duckdns.org',
                     accent: '#64d2ff',
                     icon: '🧠'
                 }
