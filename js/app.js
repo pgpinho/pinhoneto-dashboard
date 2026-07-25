@@ -1,9 +1,8 @@
 /* ============================================
    PINHO-NETO Dashboard — app.js
-   v3.0 · Grading Suite
-   Pulse bar · Status checks · Search filter ·
-   Bottom tab bar · Loading skeleton ·
-   Responsive desktop/mobile rendering
+   v4.0 · Full-viewport Web App
+   Filter chips · Search · Status checks ·
+   Bottom tab bar (mobile) · About modal
    ============================================ */
 
 (function () {
@@ -14,111 +13,51 @@
         {
             name: 'Media',
             services: [
-                {
-                    name: 'Plex Media Server',
-                    desc: 'Streaming de filmes, séries e música.',
-                    url: 'http://pinhoneto.duckdns.org:32400/web',
-                    accent: '#e5a00d',
-                    icon: '🎬'
-                },
-                {
-                    name: 'qBittorrent',
-                    desc: 'Gestão de descarregamentos BitTorrent.',
-                    url: 'http://pinhoneto.duckdns.org:9080',
-                    accent: '#2ec5e3',
-                    icon: '🧲'
-                },
-                {
-                    name: 'Jackett',
-                    desc: 'Indexadores de torrents como API.',
-                    url: 'http://pinhoneto.duckdns.org:9117',
-                    accent: '#f97316',
-                    icon: '🧥'
-                }
+                { name: 'Plex Media Server', desc: 'Streaming de filmes, séries e música.', url: 'http://pinhoneto.duckdns.org:32400/web', accent: '#e5a00d', icon: '🎬' },
+                { name: 'qBittorrent', desc: 'Gestão de descarregamentos BitTorrent.', url: 'http://pinhoneto.duckdns.org:9080', accent: '#2ec5e3', icon: '🧲' },
+                { name: 'Jackett', desc: 'Indexadores de torrents como API.', url: 'http://pinhoneto.duckdns.org:9117', accent: '#f97316', icon: '🧥' }
             ]
         },
         {
             name: 'Nuvem & Produtividade',
             services: [
-                {
-                    name: 'Nextcloud',
-                    desc: 'Nuvem pessoal: ficheiros, calendário e contactos.',
-                    url: 'https://pinhoneto.duckdns.org/Nextcloud',
-                    accent: '#3b82f6',
-                    icon: '☁️'
-                },
-                {
-                    name: 'Vaultwarden',
-                    desc: 'Gestor de palavras-passe compatível com Bitwarden.',
-                    url: 'https://pinhoneto.duckdns.org/Vaultwarden',
-                    accent: '#a78bfa',
-                    icon: '🔐'
-                },
-                {
-                    name: 'Portfolio',
-                    desc: 'Site pessoal e portfólio de Paulo Pinho.',
-                    url: 'https://pgpinho.duckdns.org',
-                    accent: '#f0506e',
-                    icon: '🖌️'
-                }
+                { name: 'Nextcloud', desc: 'Nuvem pessoal: ficheiros, calendário e contactos.', url: 'https://pinhoneto.duckdns.org/Nextcloud', accent: '#3b82f6', icon: '☁️' },
+                { name: 'Vaultwarden', desc: 'Gestor de palavras-passe compatível com Bitwarden.', url: 'https://pinhoneto.duckdns.org/Vaultwarden', accent: '#a78bfa', icon: '🔐' },
+                { name: 'Portfolio', desc: 'Site pessoal e portfólio de Paulo Pinho.', url: 'https://pgpinho.duckdns.org', accent: '#f0506e', icon: '🖌️' }
             ]
         },
         {
             name: 'Monitorização',
             services: [
-                {
-                    name: 'Uptime Kuma',
-                    desc: 'Monitorização de disponibilidade de serviços.',
-                    url: 'https://pgpinho.duckdns.org:9443',
-                    accent: '#4ec9b0',
-                    icon: '📊'
-                },
-                {
-                    name: 'Hermes Dashboard',
-                    desc: 'Painel do agente Hermes — automação e IA.',
-                    url: 'https://pgpinho.duckdns.org/hermes/',
-                    accent: '#f0a050',
-                    icon: '🤖'
-                }
+                { name: 'Uptime Kuma', desc: 'Monitorização de disponibilidade de serviços.', url: 'https://pgpinho.duckdns.org:9443', accent: '#4ec9b0', icon: '📊' },
+                { name: 'Hermes Dashboard', desc: 'Painel do agente Hermes — automação e IA.', url: 'https://pgpinho.duckdns.org/hermes/', accent: '#f0a050', icon: '🤖' }
             ]
         },
         {
             name: 'Inteligência Artificial',
             services: [
-                {
-                    name: 'Open WebUI',
-                    desc: 'Interface web para modelos de IA locais.',
-                    url: 'https://papaai.duckdns.org',
-                    accent: '#64d2ff',
-                    icon: '🧠'
-                }
+                { name: 'Open WebUI', desc: 'Interface web para modelos de IA locais.', url: 'https://papaai.duckdns.org', accent: '#64d2ff', icon: '🧠' }
             ]
         },
         {
             name: 'Ficheiros',
             services: [
-                {
-                    name: 'Samba / SMB',
-                    desc: 'Partilha de ficheiros na rede local.',
-                    url: 'smb://pinhoneto.duckdns.org',
-                    accent: '#f0c040',
-                    icon: '📁',
-                    noCheck: true
-                }
+                { name: 'Samba / SMB', desc: 'Partilha de ficheiros na rede local.', url: 'smb://pinhoneto.duckdns.org', accent: '#f0c040', icon: '📁', noCheck: true }
             ]
         }
     ];
 
-    /* ---------- Flatten for search ---------- */
+    /* ---------- Flatten ---------- */
     var ALL = CATEGORIES.reduce(function (acc, cat) {
         cat.services.forEach(function (s) { s._cat = cat.name; acc.push(s); });
         return acc;
     }, []);
 
     /* ---------- State ---------- */
-    var isMobile = window.innerWidth < 768;
+    var isMobile = window.innerWidth < 600;
     var currentTab = 'inicio';
     var searchQuery = '';
+    var activeFilter = 'all';
     var statusCache = {};
 
     /* ---------- DOM refs ---------- */
@@ -127,21 +66,14 @@
     var searchInput = document.getElementById('search');
     var clockTime = document.getElementById('clock-time');
     var clockDate = document.getElementById('clock-date');
-    var skeleton = document.getElementById('skeleton');
-    var aboutSection = document.getElementById('aboutSection');
     var tabBar = document.getElementById('tabBar');
-    var heroSection = document.querySelector('.hero');
-    var pulseBar = document.getElementById('pulseBar');
+    var filterChips = document.getElementById('filterChips');
+    var aboutSection = document.getElementById('aboutSection');
+    var aboutClose = document.getElementById('aboutClose');
 
     /* ---------- Icon helpers ---------- */
-    function linkIcon() {
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;">' +
-               '<path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>';
-    }
-
     function chevronSVG() {
-        return '<svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-               '<polyline points="9 6 15 12 9 18"></polyline></svg>';
+        return '<svg class="card-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 6 15 12 9 18"></polyline></svg>';
     }
 
     function dotHTML(url, noCheck) {
@@ -152,45 +84,20 @@
             var c = statusCache[url];
             return '<span class="dot ' + c.cls + ' pulse" data-url="' + url + '"></span><span class="dot-text">' + c.label + '</span>';
         }
-        return '<span class="dot" data-url="' + url + '"></span><span class="dot-text">a verificar…</span>';
+        return '<span class="dot" data-url="' + url + '"></span><span class="dot-text">…</span>';
     }
 
-    /* ---------- Pulse bar builder ---------- */
-    function buildPulseBar() {
-        var frag = document.createDocumentFragment();
-        // Keep the SIGNAL label
-        var label = document.createElement('span');
-        label.className = 'pulse-label';
-        label.textContent = 'SIGNAL';
-        frag.appendChild(label);
-
-        ALL.forEach(function (s) {
-            var dot = document.createElement('span');
-            dot.className = 'pulse-dot';
-            dot.setAttribute('data-url', s.url);
-            dot.setAttribute('data-name', s.name);
-            dot.setAttribute('title', s.name);
-            dot.style.background = s.noCheck ? 'var(--unknown)' : 'var(--unknown)';
-            dot.addEventListener('click', function () {
-                window.open(s.url, '_blank', 'noopener');
-            });
-            frag.appendChild(dot);
+    /* ---------- Filter chips ---------- */
+    filterChips.querySelectorAll('.chip').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            filterChips.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('active'); });
+            chip.classList.add('active');
+            activeFilter = chip.getAttribute('data-filter');
+            render();
         });
+    });
 
-        // Clear and append
-        while (pulseBar.firstChild) pulseBar.removeChild(pulseBar.firstChild);
-        pulseBar.appendChild(frag);
-    }
-
-    function updatePulseDot(url, status) {
-        var dots = pulseBar.querySelectorAll('.pulse-dot[data-url="' + url + '"]');
-        dots.forEach(function (dot) {
-            dot.classList.remove('ok', 'warn', 'bad', 'unknown');
-            dot.classList.add(status.cls);
-        });
-    }
-
-    /* ---------- Tab bar handling ---------- */
+    /* ---------- Tab bar (mobile) ---------- */
     tabBar.querySelectorAll('.tab-item').forEach(function (btn) {
         btn.addEventListener('click', function () {
             switchTab(btn.getAttribute('data-tab'));
@@ -200,62 +107,70 @@
     function switchTab(tab) {
         currentTab = tab;
         tabBar.querySelectorAll('.tab-item').forEach(function (b) {
-            var active = b.getAttribute('data-tab') === tab;
-            b.classList.toggle('active', active);
+            b.classList.toggle('active', b.getAttribute('data-tab') === tab);
         });
+
+        if (tab === 'acerca') {
+            aboutSection.classList.add('show');
+            return;
+        }
+        aboutSection.classList.remove('show');
         render();
+    }
+
+    /* About close */
+    aboutClose.addEventListener('click', function () {
+        aboutSection.classList.remove('show');
+        // Reset to inicio tab
+        currentTab = 'inicio';
+        tabBar.querySelectorAll('.tab-item').forEach(function (b) {
+            b.classList.toggle('active', b.getAttribute('data-tab') === 'inicio');
+        });
+    });
+
+    /* Click outside closes about */
+    aboutSection.addEventListener('click', function (e) {
+        if (e.target === aboutSection) {
+            aboutSection.classList.remove('show');
+            currentTab = 'inicio';
+            tabBar.querySelectorAll('.tab-item').forEach(function (b) {
+                b.classList.toggle('active', b.getAttribute('data-tab') === 'inicio');
+            });
+        }
+    });
+
+    /* Escape closes about */
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && aboutSection.classList.contains('show')) {
+            aboutSection.classList.remove('show');
+            currentTab = 'inicio';
+            tabBar.querySelectorAll('.tab-item').forEach(function (b) {
+                b.classList.toggle('active', b.getAttribute('data-tab') === 'inicio');
+            });
+        }
+    });
+
+    /* ---------- Get visible services ---------- */
+    function getVisible() {
+        var q = searchQuery;
+        return ALL.filter(function (s) {
+            // Category filter
+            if (activeFilter !== 'all' && s._cat !== activeFilter) return false;
+            // Search
+            if (q && (s.name + ' ' + s.desc + ' ' + s._cat).toLowerCase().indexOf(q) === -1) return false;
+            return true;
+        });
     }
 
     /* ---------- Main render ---------- */
     function render() {
-        if (skeleton) skeleton.hidden = true;
-
-        // About tab
-        if (currentTab === 'acerca') {
-            grid.hidden = true;
-            noResults.hidden = true;
-            if (heroSection) heroSection.hidden = true;
-            if (aboutSection) aboutSection.hidden = false;
-            return;
-        }
-
-        if (aboutSection) aboutSection.hidden = true;
-        grid.hidden = false;
-
-        // Início tab on desktop shows hero; Serviços tab always shows services
-        if (heroSection && !isMobile) {
-            heroSection.hidden = (currentTab === 'servicos');
-        }
-
         grid.innerHTML = '';
+        var visible = getVisible();
+        noResults.hidden = visible.length > 0;
 
-        // Determine visible services
-        var q = searchQuery;
-        var visible;
-        if (q) {
-            visible = ALL.filter(function (s) {
-                return (s.name + ' ' + s.desc + ' ' + s._cat).toLowerCase().indexOf(q) > -1;
-            });
-            noResults.hidden = !(q && visible.length === 0);
-        } else {
-            noResults.hidden = true;
-        }
-
-        if (q) {
-            // Flat list when searching
-            var frag = document.createDocumentFragment();
-            visible.forEach(function (s, i) { frag.appendChild(card(s, i)); });
-            grid.appendChild(frag);
-        } else {
-            // Grouped by category
-            CATEGORIES.forEach(function (cat) {
-                var lbl = document.createElement('div');
-                lbl.className = 'cat-label';
-                lbl.textContent = cat.name;
-                grid.appendChild(lbl);
-                cat.services.forEach(function (s, i) { grid.appendChild(card(s, i)); });
-            });
-        }
+        visible.forEach(function (s, i) {
+            grid.appendChild(card(s, i));
+        });
 
         checkStatuses();
     }
@@ -264,7 +179,7 @@
     function card(s, i) {
         var el = document.createElement('a');
         el.className = 'card';
-        el.style.animationDelay = (i * 35) + 'ms';
+        el.style.animationDelay = (i * 30) + 'ms';
         el.style.setProperty('--accent', s.accent);
         el.setAttribute('data-name', s.name.toLowerCase());
         el.setAttribute('href', s.url);
@@ -281,16 +196,14 @@
             '<div class="card-body">' +
                 '<h3 class="card-name">' + s.name + '</h3>' +
                 '<p class="card-desc">' + s.desc + '</p>' +
+                '<span class="card-cat">' + s._cat + '</span>' +
             '</div>' +
-            '<span class="card-link">' +
-                'Abrir ' + linkIcon() +
-            '</span>' +
             chevronSVG();
 
         return el;
     }
 
-    /* ---------- Status checks (CORS-tolerant) ---------- */
+    /* ---------- Status checks ---------- */
     function checkStatuses() {
         var dots = grid.querySelectorAll('.dot[data-url]');
         dots.forEach(function (dot) {
@@ -310,30 +223,26 @@
 
         fetch(url, { mode: 'no-cors', signal: ctrl ? ctrl.signal : undefined, cache: 'no-store' })
             .then(function () {
-                var result = { cls: 'ok', label: 'online' };
-                statusCache[url] = result;
-                applyStatus(dot, result);
-                updatePulseDot(url, result);
+                var r = { cls: 'ok', label: 'online' };
+                statusCache[url] = r;
+                applyStatus(dot, r);
             })
             .catch(function (err) {
                 if (err && err.name === 'AbortError') {
-                    var resultW = { cls: 'warn', label: 'lento' };
-                    statusCache[url] = resultW;
-                    applyStatus(dot, resultW);
-                    updatePulseDot(url, resultW);
+                    var rW = { cls: 'warn', label: 'lento' };
+                    statusCache[url] = rW;
+                    applyStatus(dot, rW);
                 } else {
                     imgProbe(url).then(
                         function () {
-                            var resultO = { cls: 'ok', label: 'online' };
-                            statusCache[url] = resultO;
-                            applyStatus(dot, resultO);
-                            updatePulseDot(url, resultO);
+                            var rO = { cls: 'ok', label: 'online' };
+                            statusCache[url] = rO;
+                            applyStatus(dot, rO);
                         },
                         function () {
-                            var resultB = { cls: 'bad', label: 'offline' };
-                            statusCache[url] = resultB;
-                            applyStatus(dot, resultB);
-                            updatePulseDot(url, resultB);
+                            var rB = { cls: 'bad', label: 'offline' };
+                            statusCache[url] = rB;
+                            applyStatus(dot, rB);
                         }
                     );
                 }
@@ -368,41 +277,22 @@
     });
 
     /* ---------- Clock ---------- */
-    var WEEKDAYS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+    var WEEKDAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     var MONTHS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
 
     function pad(n) { return (n < 10 ? '0' : '') + n; }
 
     function tick() {
         var now = new Date();
-        var h = pad(now.getHours());
-        var m = pad(now.getMinutes());
-        var s = pad(now.getSeconds());
-        var wd = WEEKDAYS[now.getDay()];
-        var d = now.getDate();
-        var mo = MONTHS[now.getMonth()];
-        var y = now.getFullYear();
-
-        clockTime.textContent = h + ':' + m + ':' + s;
-        clockDate.textContent = wd + ', ' + d + ' ' + mo + ' ' + y;
-
-        if (isMobile) {
-            clockTime.textContent = h + ':' + m;
-        }
+        clockTime.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+        clockDate.textContent = WEEKDAYS[now.getDay()] + ', ' + now.getDate() + ' ' + MONTHS[now.getMonth()] + ' ' + now.getFullYear();
+        if (isMobile) clockTime.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes());
     }
 
     /* ---------- Responsive ---------- */
-    var prevMobile = isMobile;
-
     function handleResize() {
-        var nowMobile = window.innerWidth < 768;
-        if (nowMobile !== prevMobile) {
-            prevMobile = nowMobile;
-            isMobile = nowMobile;
-            render();
-        }
+        isMobile = window.innerWidth < 600;
     }
-
     var resizeTimer;
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
@@ -411,17 +301,10 @@
 
     /* ---------- Init ---------- */
     function init() {
-        isMobile = window.innerWidth < 768;
-        prevMobile = isMobile;
+        isMobile = window.innerWidth < 600;
         tick();
         setInterval(tick, 1000);
-
-        buildPulseBar();
-
-        // Show skeleton initially, then render after brief delay
-        setTimeout(function () {
-            render();
-        }, 400);
+        render();
     }
 
     if (document.readyState === 'loading') {
