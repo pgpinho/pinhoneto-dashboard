@@ -43,14 +43,14 @@
                 {
                     name: 'Nextcloud',
                     desc: 'Nuvem pessoal: ficheiros, calendário e contactos.',
-                    url: 'https://papaai.duckdns.org',
+                    url: 'https://pinhoneto.duckdns.org/Nextcloud',
                     accent: '#0a84ff',
                     icon: '☁️'
                 },
                 {
                     name: 'Vaultwarden',
                     desc: 'Gestor de palavras-passe compatível com Bitwarden.',
-                    url: 'https://papaai.duckdns.org:8443',
+                    url: 'https://pinhoneto.duckdns.org/Vaultwarden',
                     accent: '#bf5af2',
                     icon: '🔐'
                 },
