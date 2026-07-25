@@ -2,20 +2,40 @@
 <html lang="pt-PT">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PINHO-NETO · Painel de Serviços</title>
+
+    <!-- Mobile / PWA meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="PINHO-NETO" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#0a0e1a" />
+    <meta name="color-scheme" content="dark" />
+
+    <!-- SEO -->
+    <title>PINHO-NETO · Serviços</title>
     <meta name="description" content="Painel central de serviços auto-hospedados do servidor doméstico PINHO-NETO." />
+    <meta name="author" content="PINHO-NETO" />
+
+    <!-- Styles -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
+
+    <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>" />
 </head>
 <body>
+    <!-- Animated background (decorative) -->
     <div class="bg-gradient" aria-hidden="true"></div>
     <div class="bg-grid" aria-hidden="true"></div>
 
-    <header class="site-header">
+    <!-- ============================================================
+         Top navigation bar — frosted glass, fixed
+         (Desktop: logo left, clock right)
+         (Mobile: iOS status-bar style, logo + time)
+         ============================================================ -->
+    <header class="site-header" id="siteHeader">
         <div class="logo" aria-label="PINHO-NETO">
             <span class="logo-mark" aria-hidden="true">
                 <span class="logo-pn">PN</span>
@@ -33,31 +53,186 @@
         </div>
     </header>
 
-    <main class="container">
+    <!-- ============================================================
+         Search bar — single input, works on both desktop & mobile
+         (Mobile: sticky below header, iOS Search style)
+         (Desktop: centered in hero flow, pill-shaped)
+         ============================================================ -->
+    <div class="search-bar-wrap" id="searchBarWrap">
+        <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" id="search" class="search-input" placeholder="Pesquisar serviços..." aria-label="Pesquisar serviços" autocomplete="off" />
+        </div>
+    </div>
+
+    <!-- ============================================================
+         MAIN CONTENT
+         ============================================================ -->
+    <main class="container" id="mainContainer">
+
+        <!-- Hero (desktop only — hidden on mobile) -->
         <section class="hero">
-            <h1 class="hero-title">Painel de Serviços</h1>
+            <h1 class="hero-title">Serviços</h1>
             <p class="hero-sub">Acesso rápido a todos os serviços do servidor doméstico <strong>PINHO-NETO</strong>.</p>
         </section>
 
-        <section class="search-section">
-            <div class="search-wrap">
-                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                </svg>
-                <input type="search" id="search" class="search-input" placeholder="Pesquisar serviços..." aria-label="Pesquisar serviços" autocomplete="off" />
+        <!-- Loading skeleton (shown until JS populates #services) -->
+        <div class="skeleton-wrap" id="skeleton" aria-hidden="true">
+            <div class="skeleton-cat"></div>
+            <div class="skeleton-card">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-lines">
+                    <div class="skeleton-line skeleton-line-w70"></div>
+                    <div class="skeleton-line skeleton-line-w90"></div>
+                </div>
             </div>
-        </section>
+            <div class="skeleton-card">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-lines">
+                    <div class="skeleton-line skeleton-line-w60"></div>
+                    <div class="skeleton-line skeleton-line-w85"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-lines">
+                    <div class="skeleton-line skeleton-line-w75"></div>
+                    <div class="skeleton-line skeleton-line-w80"></div>
+                </div>
+            </div>
+            <div class="skeleton-cat"></div>
+            <div class="skeleton-card">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-lines">
+                    <div class="skeleton-line skeleton-line-w65"></div>
+                    <div class="skeleton-line skeleton-line-w88"></div>
+                </div>
+            </div>
+            <div class="skeleton-card">
+                <div class="skeleton-icon"></div>
+                <div class="skeleton-lines">
+                    <div class="skeleton-line skeleton-line-w72"></div>
+                    <div class="skeleton-line skeleton-line-w82"></div>
+                </div>
+            </div>
+        </div>
 
+        <!-- Services grid / list (populated by app.js) -->
         <section id="services" class="services" aria-label="Serviços"></section>
 
         <p class="no-results" id="no-results" hidden>Nenhum serviço encontrado para a sua pesquisa.</p>
+
+        <!-- Acerca section (shown when "Acerca" tab is active on mobile) -->
+        <section class="about-section" id="aboutSection">
+            <h2 class="about-title">Acerca</h2>
+            <div class="about-card">
+                <div class="about-row">
+                    <div class="about-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <div class="about-row-content">
+                        <div class="about-row-label">Servidor</div>
+                        <div class="about-row-value">PINHO-NETO</div>
+                    </div>
+                    <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="about-row">
+                    <div class="about-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                        </svg>
+                    </div>
+                    <div class="about-row-content">
+                        <div class="about-row-label">Domínio</div>
+                        <div class="about-row-value">pinhoneto.duckdns.org</div>
+                    </div>
+                    <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="about-row">
+                    <div class="about-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 2 2 7l10 5 10-5-10-5z"></path>
+                            <path d="m2 17 10 5 10-5"></path>
+                            <path d="m2 12 10 5 10-5"></path>
+                        </svg>
+                    </div>
+                    <div class="about-row-content">
+                        <div class="about-row-label">Plataforma</div>
+                        <div class="about-row-value">Hermes Agent</div>
+                    </div>
+                    <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+                <div class="about-row about-row-last">
+                    <div class="about-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </div>
+                    <div class="about-row-content">
+                        <div class="about-row-label">Versão</div>
+                        <div class="about-row-value">2.0 · Apple Edition</div>
+                    </div>
+                    <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <span>© 2026 PINHO-NETO · Powered by Hermes Agent</span>
+        </footer>
     </main>
 
-    <footer class="site-footer">
-        <span>© 2026 PINHO-NETO · Powered by Hermes Agent</span>
-    </footer>
+    <!-- ============================================================
+         MOBILE — iOS-style bottom tab bar (frosted glass)
+         3 tabs: Início, Serviços, Acerca
+         ============================================================ -->
+    <nav class="tab-bar" id="tabBar" aria-label="Navegação">
+        <button class="tab-item active" data-tab="inicio" aria-label="Início">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 9.5 12 3l9 6.5"></path>
+                <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"></path>
+            </svg>
+            <span class="tab-label">Início</span>
+        </button>
+        <button class="tab-item" data-tab="servicos" aria-label="Serviços">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="7" height="7" rx="2"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="2"></rect>
+                <rect x="3" y="14" width="7" height="7" rx="2"></rect>
+                <rect x="14" y="14" width="7" height="7" rx="2"></rect>
+            </svg>
+            <span class="tab-label">Serviços</span>
+        </button>
+        <button class="tab-item" data-tab="acerca" aria-label="Acerca">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <line x1="12" y1="10" x2="12" y2="16"></line>
+                <circle cx="12" cy="7" r="0.8" fill="currentColor"></circle>
+            </svg>
+            <span class="tab-label">Acerca</span>
+        </button>
+    </nav>
 
+    <!-- App script -->
     <script src="js/app.js"></script>
 </body>
 </html>
