@@ -9,7 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="PINHO-NETO" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="theme-color" content="#0a0e1a" />
+    <meta name="theme-color" content="#0d0e11" />
     <meta name="color-scheme" content="dark" />
 
     <!-- SEO -->
@@ -17,28 +17,31 @@
     <meta name="description" content="Painel central de serviços auto-hospedados do servidor doméstico PINHO-NETO." />
     <meta name="author" content="PINHO-NETO" />
 
-    <!-- Styles -->
+    <!-- Fonts — Space Grotesk (display), Inter (body), JetBrains Mono (data) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="css/style.css" />
 
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>" />
+    <!-- Favicon — PN monogram SVG -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='5' fill='%230d0e11' stroke='%233a3d46' stroke-width='1'/><text x='16' y='22' font-family='monospace' font-size='14' font-weight='600' fill='%234ec9b0' text-anchor='middle'>PN</text></svg>" />
 </head>
 <body>
-    <!-- Animated background (decorative) -->
-    <div class="bg-gradient" aria-hidden="true"></div>
-    <div class="bg-grid" aria-hidden="true"></div>
+    <!-- Ambient background -->
+    <div class="bg-ambient" aria-hidden="true"></div>
 
     <!-- ============================================================
-         Top navigation bar — frosted glass, fixed
-         (Desktop: logo left, clock right)
-         (Mobile: iOS status-bar style, logo + time)
+         Top header
          ============================================================ -->
     <header class="site-header" id="siteHeader">
         <div class="logo" aria-label="PINHO-NETO">
             <span class="logo-mark" aria-hidden="true">
-                <span class="logo-pn">PN</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--signal);">
+                    <rect x="3" y="3" width="18" height="18" rx="3"></rect>
+                    <text x="12" y="16" font-family="monospace" font-size="9" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">PN</text>
+                </svg>
             </span>
             <span class="logo-text">
                 <span class="logo-pin">PINHO</span><span class="logo-dash">-</span><span class="logo-net">NETO</span>
@@ -54,9 +57,17 @@
     </header>
 
     <!-- ============================================================
-         Search bar — single input, works on both desktop & mobile
-         (Mobile: sticky below header, iOS Search style)
-         (Desktop: centered in hero flow, pill-shaped)
+         Signal pulse bar — signature element
+         Shows all services as colored dots (like a signal chain)
+         ============================================================ -->
+    <div class="pulse-bar-wrap" id="pulseBarWrap">
+        <div class="pulse-bar" id="pulseBar">
+            <span class="pulse-label">SIGNAL</span>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         Search bar
          ============================================================ -->
     <div class="search-bar-wrap" id="searchBarWrap">
         <div class="search-wrap">
@@ -73,13 +84,14 @@
          ============================================================ -->
     <main class="container" id="mainContainer">
 
-        <!-- Hero (desktop only — hidden on mobile) -->
+        <!-- Hero (desktop only) -->
         <section class="hero">
+            <p class="hero-eyebrow">// SERVIDOR DOMÉSTICO</p>
             <h1 class="hero-title">Serviços</h1>
             <p class="hero-sub">Acesso rápido a todos os serviços do servidor doméstico <strong>PINHO-NETO</strong>.</p>
         </section>
 
-        <!-- Loading skeleton (shown until JS populates #services) -->
+        <!-- Loading skeleton -->
         <div class="skeleton-wrap" id="skeleton" aria-hidden="true">
             <div class="skeleton-cat"></div>
             <div class="skeleton-card">
@@ -120,14 +132,14 @@
             </div>
         </div>
 
-        <!-- Services grid / list (populated by app.js) -->
+        <!-- Services grid (populated by app.js) -->
         <section id="services" class="services" aria-label="Serviços"></section>
 
         <p class="no-results" id="no-results" hidden>Nenhum serviço encontrado para a sua pesquisa.</p>
 
-        <!-- Acerca section (shown when "Acerca" tab is active on mobile) -->
+        <!-- Acerca section -->
         <section class="about-section" id="aboutSection">
-            <h2 class="about-title">Acerca</h2>
+            <h2 class="about-title">// ACESSO</h2>
             <div class="about-card">
                 <div class="about-row">
                     <div class="about-row-icon">
@@ -138,7 +150,7 @@
                         </svg>
                     </div>
                     <div class="about-row-content">
-                        <div class="about-row-label">Servidor</div>
+                        <div class="about-row-label">SERVIDOR</div>
                         <div class="about-row-value">PINHO-NETO</div>
                     </div>
                     <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -154,7 +166,7 @@
                         </svg>
                     </div>
                     <div class="about-row-content">
-                        <div class="about-row-label">Domínio</div>
+                        <div class="about-row-label">DOMÍNIO</div>
                         <div class="about-row-value">pinhoneto.duckdns.org</div>
                     </div>
                     <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -170,7 +182,7 @@
                         </svg>
                     </div>
                     <div class="about-row-content">
-                        <div class="about-row-label">Plataforma</div>
+                        <div class="about-row-label">PLATAFORMA</div>
                         <div class="about-row-value">Hermes Agent</div>
                     </div>
                     <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -185,8 +197,8 @@
                         </svg>
                     </div>
                     <div class="about-row-content">
-                        <div class="about-row-label">Versão</div>
-                        <div class="about-row-value">2.0 · Apple Edition</div>
+                        <div class="about-row-label">VERSÃO</div>
+                        <div class="about-row-value">3.0 · Grading Suite</div>
                     </div>
                     <svg class="about-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -197,13 +209,12 @@
 
         <!-- Footer -->
         <footer class="site-footer">
-            <span>© 2026 PINHO-NETO · Powered by Hermes Agent</span>
+            <span>© 2026 PINHO-NETO · Hermes Agent · v3.0</span>
         </footer>
     </main>
 
     <!-- ============================================================
-         MOBILE — iOS-style bottom tab bar (frosted glass)
-         3 tabs: Início, Serviços, Acerca
+         MOBILE — bottom tab bar
          ============================================================ -->
     <nav class="tab-bar" id="tabBar" aria-label="Navegação">
         <button class="tab-item active" data-tab="inicio" aria-label="Início">

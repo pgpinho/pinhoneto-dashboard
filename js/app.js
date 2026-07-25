@@ -1,7 +1,7 @@
 /* ============================================
    PINHO-NETO Dashboard — app.js
-   Apple-inspired interactions
-   Clock · Status checks · Search filter ·
+   v3.0 · Grading Suite
+   Pulse bar · Status checks · Search filter ·
    Bottom tab bar · Loading skeleton ·
    Responsive desktop/mobile rendering
    ============================================ */
@@ -44,21 +44,21 @@
                     name: 'Nextcloud',
                     desc: 'Nuvem pessoal: ficheiros, calendário e contactos.',
                     url: 'https://pinhoneto.duckdns.org/Nextcloud',
-                    accent: '#0a84ff',
+                    accent: '#3b82f6',
                     icon: '☁️'
                 },
                 {
                     name: 'Vaultwarden',
                     desc: 'Gestor de palavras-passe compatível com Bitwarden.',
                     url: 'https://pinhoneto.duckdns.org/Vaultwarden',
-                    accent: '#bf5af2',
+                    accent: '#a78bfa',
                     icon: '🔐'
                 },
                 {
                     name: 'Portfolio',
                     desc: 'Site pessoal e portfólio de Paulo Pinho.',
                     url: 'https://pgpinho.duckdns.org',
-                    accent: '#ff375f',
+                    accent: '#f0506e',
                     icon: '🖌️'
                 }
             ]
@@ -70,14 +70,14 @@
                     name: 'Uptime Kuma',
                     desc: 'Monitorização de disponibilidade de serviços.',
                     url: 'https://pgpinho.duckdns.org:9443',
-                    accent: '#30d158',
+                    accent: '#4ec9b0',
                     icon: '📊'
                 },
                 {
                     name: 'Hermes Dashboard',
                     desc: 'Painel do agente Hermes — automação e IA.',
                     url: 'https://pgpinho.duckdns.org/hermes/',
-                    accent: '#ff9f0a',
+                    accent: '#f0a050',
                     icon: '🤖'
                 }
             ]
@@ -101,7 +101,7 @@
                     name: 'Samba / SMB',
                     desc: 'Partilha de ficheiros na rede local.',
                     url: 'smb://pinhoneto.duckdns.org',
-                    accent: '#ffd60a',
+                    accent: '#f0c040',
                     icon: '📁',
                     noCheck: true
                 }
@@ -131,11 +131,11 @@
     var aboutSection = document.getElementById('aboutSection');
     var tabBar = document.getElementById('tabBar');
     var heroSection = document.querySelector('.hero');
-    var searchSection = document.querySelector('.search-section');
+    var pulseBar = document.getElementById('pulseBar');
 
     /* ---------- Icon helpers ---------- */
     function linkIcon() {
-        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;">' +
+        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;">' +
                '<path d="M7 17 17 7"></path><path d="M7 7h10v10"></path></svg>';
     }
 
@@ -153,6 +153,41 @@
             return '<span class="dot ' + c.cls + ' pulse" data-url="' + url + '"></span><span class="dot-text">' + c.label + '</span>';
         }
         return '<span class="dot" data-url="' + url + '"></span><span class="dot-text">a verificar…</span>';
+    }
+
+    /* ---------- Pulse bar builder ---------- */
+    function buildPulseBar() {
+        var frag = document.createDocumentFragment();
+        // Keep the SIGNAL label
+        var label = document.createElement('span');
+        label.className = 'pulse-label';
+        label.textContent = 'SIGNAL';
+        frag.appendChild(label);
+
+        ALL.forEach(function (s) {
+            var dot = document.createElement('span');
+            dot.className = 'pulse-dot';
+            dot.setAttribute('data-url', s.url);
+            dot.setAttribute('data-name', s.name);
+            dot.setAttribute('title', s.name);
+            dot.style.background = s.noCheck ? 'var(--unknown)' : 'var(--unknown)';
+            dot.addEventListener('click', function () {
+                window.open(s.url, '_blank', 'noopener');
+            });
+            frag.appendChild(dot);
+        });
+
+        // Clear and append
+        while (pulseBar.firstChild) pulseBar.removeChild(pulseBar.firstChild);
+        pulseBar.appendChild(frag);
+    }
+
+    function updatePulseDot(url, status) {
+        var dots = pulseBar.querySelectorAll('.pulse-dot[data-url="' + url + '"]');
+        dots.forEach(function (dot) {
+            dot.classList.remove('ok', 'warn', 'bad', 'unknown');
+            dot.classList.add(status.cls);
+        });
     }
 
     /* ---------- Tab bar handling ---------- */
@@ -173,7 +208,6 @@
 
     /* ---------- Main render ---------- */
     function render() {
-        // Hide skeleton once we're rendering real content
         if (skeleton) skeleton.hidden = true;
 
         // About tab
@@ -230,7 +264,7 @@
     function card(s, i) {
         var el = document.createElement('a');
         el.className = 'card';
-        el.style.animationDelay = (i * 40) + 'ms';
+        el.style.animationDelay = (i * 35) + 'ms';
         el.style.setProperty('--accent', s.accent);
         el.setAttribute('data-name', s.name.toLowerCase());
         el.setAttribute('href', s.url);
@@ -239,8 +273,6 @@
 
         var statusHTML = dotHTML(s.url, s.noCheck);
 
-        // Desktop: icon + status on top, body below, link at bottom
-        // Mobile (CSS handles layout): row layout with chevron
         el.innerHTML =
             '<div class="card-top">' +
                 '<div class="card-icon">' + s.icon + '</div>' +
@@ -281,23 +313,27 @@
                 var result = { cls: 'ok', label: 'online' };
                 statusCache[url] = result;
                 applyStatus(dot, result);
+                updatePulseDot(url, result);
             })
             .catch(function (err) {
                 if (err && err.name === 'AbortError') {
                     var resultW = { cls: 'warn', label: 'lento' };
                     statusCache[url] = resultW;
                     applyStatus(dot, resultW);
+                    updatePulseDot(url, resultW);
                 } else {
                     imgProbe(url).then(
                         function () {
                             var resultO = { cls: 'ok', label: 'online' };
                             statusCache[url] = resultO;
                             applyStatus(dot, resultO);
+                            updatePulseDot(url, resultO);
                         },
                         function () {
                             var resultB = { cls: 'bad', label: 'offline' };
                             statusCache[url] = resultB;
                             applyStatus(dot, resultB);
+                            updatePulseDot(url, resultB);
                         }
                     );
                 }
@@ -350,13 +386,12 @@
         clockTime.textContent = h + ':' + m + ':' + s;
         clockDate.textContent = wd + ', ' + d + ' ' + mo + ' ' + y;
 
-        // On mobile, show compact time
         if (isMobile) {
             clockTime.textContent = h + ':' + m;
         }
     }
 
-    /* ---------- Responsive: detect breakpoint crossing ---------- */
+    /* ---------- Responsive ---------- */
     var prevMobile = isMobile;
 
     function handleResize() {
@@ -381,10 +416,12 @@
         tick();
         setInterval(tick, 1000);
 
+        buildPulseBar();
+
         // Show skeleton initially, then render after brief delay
         setTimeout(function () {
             render();
-        }, 500);
+        }, 400);
     }
 
     if (document.readyState === 'loading') {
