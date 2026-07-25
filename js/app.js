@@ -180,7 +180,7 @@
         var el = document.createElement('a');
         el.className = 'card';
         el.style.animationDelay = (i * 30) + 'ms';
-        el.style.setProperty('--accent', s.accent);
+        el.style.setProperty('--accent-color', s.accent);
         el.setAttribute('data-name', s.name.toLowerCase());
         el.setAttribute('href', s.url);
         el.setAttribute('target', '_blank');
