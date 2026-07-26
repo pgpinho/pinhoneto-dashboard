@@ -1,6 +1,6 @@
 /* ============================================
    PINHO-NETO Dashboard — auth.js
-   v5.0 · Sistema de autenticação client-side
+   v6.0 · Sistema de autenticação client-side
    PBKDF2-SHA256 (100k iterações) + HMAC-SHA256 sessions
    Dois níveis: admin / user
    Admins gerem users e definem serviços visíveis por user
@@ -70,12 +70,16 @@
     }
 
     /* ---------- Default admin bootstrap ---------- */
+    /* Versioned: bumping _authVersion forces admin password reset on all browsers */
+    var AUTH_VERSION = 2;  // v2 = password changed to 212929003
+
     async function ensureDefaultAdmin() {
         var store = getStore();
-        if (store._initialized) return;
+        if (store._initialized && store._authVersion === AUTH_VERSION) return;
 
+        // Force recreate admin with current default password
         var salt = randomHex(16);
-        var hash = await pbkdf2('pinho-neto', salt, 100000);
+        var hash = await pbkdf2('212929003', salt, 100000);
         store['admin'] = {
             username: 'admin',
             passwordHash: hash,
@@ -86,6 +90,7 @@
             createdAt: Date.now()
         };
         store._initialized = true;
+        store._authVersion = AUTH_VERSION;
         saveStore(store);
     }
 
@@ -159,7 +164,7 @@
         listUsers() {
             var store = getStore();
             return Object.keys(store)
-                .filter(function (k) { return k !== SECRET_KEY && k !== '_initialized'; })
+                .filter(function (k) { return k !== SECRET_KEY && k !== '_initialized' && k !== '_authVersion'; })
                 .map(function (k) {
                     var u = store[k];
                     return { username: k, role: u.role, displayName: u.displayName, allowedServices: u.allowedServices, createdAt: u.createdAt };
